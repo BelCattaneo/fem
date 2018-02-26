@@ -3,21 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "dependencies": {
-    "heatmap.js": "2.0.5"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BelCattaneo/fem.git"
-  },
-  "author": "Belen Cattaneo",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BelCattaneo/fem/issues"
-  },
-  "homepage": "https://github.com/BelCattaneo/fem#readme"
+  "dependencies": {
+    "heatmap.js": "^2.0.5",
+    "jquery": "^3.3.1"
+  }
 }
