@@ -1,4 +1,5 @@
 const math = require("mathjs");
+
 function matrixIndexes(matrix, fn) {
   matrix.forEach((row, y) => {
     row.forEach((node, x) => {
@@ -31,8 +32,8 @@ function innerMatrixIndexes(matrix, fn) {
   })
 }
 
-
 function buildConstantMatrix(matrix) {
+  //Devuelve la matriz de constantes.
   const constants = [];
 
   innerMatrixIndexes(matrix, (x, y) => {
@@ -44,6 +45,7 @@ function buildConstantMatrix(matrix) {
 }
 
 function chooseTemperature(temperatures, size, x, y) {
+  //Segun el punto en la matriz devuelve una temperatura o 0.
   if(x === 0 && y === 0) {
     return (temperatures.top + temperatures.left) / 2;
   }
@@ -80,6 +82,7 @@ function chooseTemperature(temperatures, size, x, y) {
 }
 
 function createMatrix(temperatures, size) {
+  //Crea la matriz de temperaturas en la tabla.
   const matrix = [];
   for(let j = 0; j < size; j++) {
     matrix.push([]);
@@ -99,6 +102,7 @@ let constantMatrix = buildConstantMatrix(matrix);
 console.log(constantMatrix);
 
 function buildCoeficientMatrix(size){
+  //Crea la matriz de los coeficientes.
   const matrix = [];
   for(let j = 0; j < size; j++) {
     matrix.push([]);
@@ -125,6 +129,7 @@ function clone(obj){
 }
 
 function replaceWithConstantMatrix(coeficientMatrix, constantMatrix, index){
+  //Reemplaza la columna indicada por la matriz de constantes.
   let newCoeficientMatrix = clone(coeficientMatrix);
   for (let i = 0; i < constantMatrix.length; i++) {
     newCoeficientMatrix[i][index] = constantMatrix[i];    
@@ -135,6 +140,7 @@ function replaceWithConstantMatrix(coeficientMatrix, constantMatrix, index){
 console.log(replaceWithConstantMatrix([[1,1,1],[1,1,1],[1,1,1]], [55,22,55], 0));
 
 function getResults(coeficientMatrix, constantMatrix){
+  //Obtiene las temperaturas en los puntos interiores.
   const determinant = math.det(coeficientMatrix);
   console.log(determinant);
   let results = [];
@@ -153,6 +159,7 @@ let results = getResults(coeficientMatrix, constantMatrix);
 console.log(results);
 
 function buildFinalMatrix(matrix, results){
+  //Crea la matriz con todas las temperaturas.
   let index = 0;
   let finalMatrix = clone(matrix);
   for (let i = 0; i < finalMatrix.length; i++) {
@@ -167,3 +174,5 @@ function buildFinalMatrix(matrix, results){
 }
 
 console.log(buildFinalMatrix(matrix, results));
+
+
