@@ -1,11 +1,8 @@
-const math = require("mathjs");
-
 function matrixIndexes(matrix, fn) {
   matrix.forEach((row, y) => {
     row.forEach((node, x) => {
       fn(x, y);
     })
-
   });
 }
 
@@ -24,23 +21,41 @@ function sumBorderNodes(matrix, x, y) {
   }, 0);
 }
 
-function innerMatrixIndexes(matrix, fn) {
-  matrixIndexes(matrix, (x, y) => {
-    if(!(x === 0 || y === 0 || y === matrix.length -1 || x === matrix.length - 1)) {
-      fn(x, y);
-    }
-  })
+function pointInBorder(matrix, x, y) {
+  return (x === 0 || y === 0 || y === matrix.length -1 || x === matrix.length - 1)
+}
+
+function borderInnerMatrixIndexes(matrix, fn) {
+  for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if(!pointInBorder(matrix, x, y)) {
+        fn(x, y);
+      }
+    }    
+  }
+}
+
+function borderInnerMatrixIndexesAndNeighbours(matrix, fn) {
+  borderInnerMatrixIndexes(matrix, function(x, y) {
+    const neighbours = [
+      pointInBorder(matrix, x  , y-1)? null : {x: x  , y : y-1}, 
+      pointInBorder(matrix, x+1, y  )? null : {x: x+1, y : y  }, 
+      pointInBorder(matrix, x  , y+1)? null : {x: x  , y : y+1}, 
+      pointInBorder(matrix, x-1, y  )? null : {x: x-1, y : y  } 
+    ];
+
+    fn(x, y, neighbours);
+  });
 }
 
 function buildConstantMatrix(matrix) {
   //Devuelve la matriz de constantes.
   const constants = [];
 
-  innerMatrixIndexes(matrix, (x, y) => {
+  borderInnerMatrixIndexes(matrix, (x, y) => {
     constants.push(sumBorderNodes(matrix, x, y));
   })
   
-
   return constants;
 }
 
@@ -94,35 +109,34 @@ function createMatrix(temperatures, size) {
   return matrix;
 }
 
-
-let matrix = createMatrix({top: 10, right: 20, bottom: 30, left: 40}, 4);
-console.log(matrix)
-
-let constantMatrix = buildConstantMatrix(matrix);
-console.log(constantMatrix);
-
-function buildCoeficientMatrix(size){
+function buildCoeficientMatrix(constantMatrix, matrix){
   //Crea la matriz de los coeficientes.
-  const matrix = [];
-  for(let j = 0; j < size; j++) {
-    matrix.push([]);
-    for(let i = 0; i < size; i++) {
-      if(i===j){
-        matrix[j][i] = 1;
-      } else if(i+j === size-1){
-        matrix[j][i] = 0;
-      } else {
-        matrix[j][i] = -1/4;
-      }
-    }
-  }
-  return matrix; 
+  let matrixCoeficients = [];
+  borderInnerMatrixIndexesAndNeighbours(matrix, function(x, y, neighbours){
+    matrixCoeficients.push(coeficientsRow(constantMatrix, matrix, x, y, neighbours));
+  })
+  return matrixCoeficients;
 }
-let coeficientMatrix = buildCoeficientMatrix(4);
-console.log(coeficientMatrix);
 
-let determinant = math.det(coeficientMatrix);
-console.log(determinant);
+function coeficientsRow(constantMatrix, matrix, x, y, neighbours){
+  let coeficientsRow = new Array(constantMatrix.length).fill(0);
+  const matrixSize = math.sqrt(constantMatrix.length);
+  let currentNodeIndex = matrixIndexToArrayIndex(matrixSize, x, y);
+  coeficientsRow[currentNodeIndex] = 4;
+
+  neighbours.forEach(function(neighbour){
+    if (neighbour) {
+      let neighbourIndex = matrixIndexToArrayIndex(matrixSize, neighbour.x, neighbour.y);
+      coeficientsRow[neighbourIndex] = -1;
+    }
+  })
+
+  return coeficientsRow;
+}
+
+function matrixIndexToArrayIndex(matrixSize, x, y){
+  return (x-1) + (y-1) * matrixSize;
+}
 
 function clone(obj){
   return JSON.parse(JSON.stringify(obj));
@@ -134,29 +148,26 @@ function replaceWithConstantMatrix(coeficientMatrix, constantMatrix, index){
   for (let i = 0; i < constantMatrix.length; i++) {
     newCoeficientMatrix[i][index] = constantMatrix[i];    
   }
-
+  //console.log(newCoeficientMatrix);
   return newCoeficientMatrix;
 }
-console.log(replaceWithConstantMatrix([[1,1,1],[1,1,1],[1,1,1]], [55,22,55], 0));
 
 function getResults(coeficientMatrix, constantMatrix){
   //Obtiene las temperaturas en los puntos interiores.
-  const determinant = math.det(coeficientMatrix);
-  console.log(determinant);
+  const determinant = math.bignumber(math.det(coeficientMatrix));
   let results = [];
+  console.log(coeficientMatrix); 
+  console.log(constantMatrix);
 
-  console.log(coeficientMatrix);
   for(i = 0; i < constantMatrix.length; i++){
-    console.log(constantMatrix);
-    console.log(math.det(replaceWithConstantMatrix(coeficientMatrix, constantMatrix, i)));
-    results.push((math.det(replaceWithConstantMatrix(coeficientMatrix, constantMatrix, i)) / determinant)/4);
+    let currentReplacedMatrix = replaceWithConstantMatrix(coeficientMatrix, constantMatrix, i);
+    let currentReplacedMatrixDeterminant = math.bignumber(math.det(currentReplacedMatrix));
+    console.log(math.divide(currentReplacedMatrixDeterminant, determinant));
+    results.push(math.number(math.divide(currentReplacedMatrixDeterminant, determinant)));
   }
 
   return results;
 }
-
-let results = getResults(coeficientMatrix, constantMatrix);
-console.log(results);
 
 function buildFinalMatrix(matrix, results){
   //Crea la matriz con todas las temperaturas.
@@ -173,6 +184,11 @@ function buildFinalMatrix(matrix, results){
   return finalMatrix;
 }
 
-console.log(buildFinalMatrix(matrix, results));
-
+function diferenciasFinitas(size, temperatures,  ){
+  let matrix = createMatrix(temperatures, size);
+  let constantMatrix = buildConstantMatrix(matrix);
+  let coeficientMatrix = buildCoeficientMatrix(constantMatrix, matrix);
+  let results = getResults(coeficientMatrix, constantMatrix);  
+  return buildFinalMatrix(matrix, results);
+}
 
