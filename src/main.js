@@ -16,6 +16,7 @@ function createHeatmap(){
 
 
 $(document).ready(function() {
+  $('[data-toggle="tooltip"]').tooltip()
   createHeatmap();
   $("#results-container").hide()
 

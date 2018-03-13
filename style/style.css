@@ -42,3 +42,7 @@ body{
   width: fit-content;
   text-align: right;
 }
+
+.temperature-input {
+  display: inline-flex;
+}
