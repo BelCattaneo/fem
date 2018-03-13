@@ -2,18 +2,43 @@
 
   <head>
     <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/heatmap.css">
     <script src="./node_modules/jquery/dist/jquery.js"></script>
     <script src="./node_modules/heatmap.js/build/heatmap.js"></script>
     <script src="./node_modules/mathjs/dist/math.js"></script>
     <script src="./src/main.js"></script>
-    <script src="./src/helpers.js"></script>
+    <script src="./src/matrix.js"></script>
+    <script src="./src/method.js"></script>
     <script src="./src/render.js"></script>
   </head>
 
   <body>
     <div class="container">
-      <div class="heatmap"></div>
+     <!-- <div id="heatmap"></div> -->
+    </div>
+
+    <div>
+      <label for="size">Size</label>
+      <input id="size" value="4" type="number">
+
+      <label for="top">Top</label>
+      <input id="top" value="20" type="number">
+      
+      <label for="right">Right</label>
+      <input id="right" value="30" type="number">
+      
+      <label for="bottom">Bottom</label>
+      <input id="bottom" value="40" type="number">
+      
+      <label for="left">Left</label>
+      <input id="left" value="50" type="number">
+      
+      <button id="run">RUN</button>
+    </div>
+    <div>
+      <table id="coeficientMatrix" class="matrix"></table>
+      <table id="constantMatrix" class="matrix"></table>
+      <br>
+      <table id="finalMatrix" class="matrix"></table>
     </div>
   </body>
 

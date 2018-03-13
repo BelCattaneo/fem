@@ -1,4 +1,36 @@
 body{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  
+}
+
+.matrix {
+  text-align: right;
+  font-size: x-large;
+}
+
+.matrix td {
+  border: black 1px solid;
+}
+
+.matrix tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+#coeficientMatrix {
+  float: left;
+}
+
+#constantMatrix {
+  float: left;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+#heatmap {
+  width: 600px;
+  height: 600px;
+  border: 1px solid black;
 }

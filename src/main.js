@@ -6,21 +6,33 @@ function renderHeatmap(heatmap, tempMatrix, screenSize){
 
 function createHeatmap(){
   return h337.create({
-    container: $(".heatmap")[0]
-  });
-  
+    container: $("#heatmap")[0]
+  }); 
 }
+
+
 $(document).ready(function() {
-  createHeatmap();
-  let size = 8;
-  let temperatures = {top: 10, right: 10, bottom: 1, left: 1};
-  console.log("Empieza Diferencias Finitas");
-  console.time("Termina Diferencias Finitas");
-  let tempMatrix = diferenciasFinitas(size, temperatures);
-  console.log(tempMatrix);
-  console.timeEnd("Termina Diferencias Finitas");
-  console.log("Empieza a Dibujar");
-  console.time("Termina de Dibujar");
-  renderHeatmap(createHeatmap, tempMatrix, screenSize);
-  console.timeEnd("Termina de Dibujar");
+  //createHeatmap();
+
+  $("#run").click(function() {
+    $("#heatmap").empty();
+
+    const {size, top, right, bottom, left}  = readValues();
+    const {constantMatrix, coeficientMatrix, finalMatrix} = diferenciasFinitas(size, {top, right, bottom, left});
+
+    const inv = math.inv(coeficientMatrix);
+    const r = math.cross(inv, constantMatrix);
+
+    console.log(r);
+
+    renderMatrix($("#coeficientMatrix"), coeficientMatrix);
+    renderMatrix($("#constantMatrix"), constantMatrix, {vertical: true});
+    renderMatrix($("#finalMatrix"), finalMatrix, {withRounding: true});
+
+    matrixIndexes(finalMatrix, function(x, y) {
+      console.log(getNodeByIndexes(finalMatrix, x, y));
+    });
+    //renderHeatmap(createHeatmap, finalMatrix, screenSize);
+  });
+
 });
