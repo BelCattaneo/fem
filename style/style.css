@@ -18,7 +18,7 @@ body{
 #heatmap {
   width: 600px;
   height: 600px;
-  border: 1px solid black;
+  border: 0.5px solid black;
 }
 
 #input-data-container {
@@ -35,7 +35,7 @@ body{
 }
 
 #title {
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .matrix {

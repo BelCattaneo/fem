@@ -1,7 +1,11 @@
 const screenSize = 600;
 
 function renderHeatmap(heatmap, tempMatrix, screenSize){
-  heatmap().setData(createHeatmapDataObject(tempMatrix, screenSize));
+  const n = tempMatrix.length;
+  const zeroMatrix = math.zeros(n, n);
+  if(!math.deepEqual(zeroMatrix, math.matrix(tempMatrix))){
+    heatmap().setData(createHeatmapDataObject(tempMatrix, screenSize));
+  }
 }
 
 function createHeatmap(){

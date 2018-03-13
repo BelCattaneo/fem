@@ -108,8 +108,8 @@ function getResults(coeficientMatrix, constantMatrix){
 function buildFinalMatrix(matrix, results){
   let index = 0;
   let finalMatrix = clone(matrix);
-  for (let i = 0; i < finalMatrix.length; i++) {
-    for (let j = 0; j < finalMatrix[i].length; j++) {
+  for (let i = 1; i < finalMatrix.length-1; i++) {
+    for (let j = 1; j < finalMatrix[i].length-1; j++) {
       if (finalMatrix[i][j] === 0) {
         finalMatrix[i][j] = results[index];
         index++;
