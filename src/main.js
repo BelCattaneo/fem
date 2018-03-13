@@ -13,6 +13,7 @@ function createHeatmap(){
 
 $(document).ready(function() {
   createHeatmap();
+  $("#results-container").hide()
 
   $("#run").click(function() {
     $("#heatmap").empty();
@@ -21,7 +22,7 @@ $(document).ready(function() {
     const {constantMatrix, coeficientMatrix, finalMatrix} = diferenciasFinitas(size, {top, right, bottom, left});
     if(method == "finite-difference"){
     }
-
+    $("#results-container").show()
     renderMatrix($("#coeficientMatrix"), coeficientMatrix);
     renderMatrix($("#constantMatrix"), constantMatrix);
     renderMatrix($("#finalMatrix"), finalMatrix, {withRounding: true});

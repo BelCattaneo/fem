@@ -35,6 +35,7 @@ function renderMatrix($elem, matrix, {withRounding} = {}) {
   const render = (tr) => {
     return (elem) => {
       const td = document.createElement("td");
+      td.setAttribute("style", "width: fit-content;");
       td.innerHTML = withRounding ? Math.round(elem) : elem;
       tr.appendChild(td);
 
@@ -44,6 +45,7 @@ function renderMatrix($elem, matrix, {withRounding} = {}) {
   
   for(let x = 0; x < matrix.length; x++) {
     let tr = document.createElement("tr");
+    tr.setAttribute("style", "width: auto;");
     if(matrix[x].length) {
       for (let y = 0; y < matrix.length; y++) {
         render(tr)(matrix[x][y])

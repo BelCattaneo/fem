@@ -27,34 +27,34 @@
         
         <div id="input-data-container" class="col-sm-4">
           <div class="form-group">
-            <label class="col-form-label-sm" for="method">M&eacute;todo</label>
+            <label class="col-form-label" for="method">M&eacute;todo</label>
             <select id="method" class="form-control form-control-sm">
                 <option value="finite-difference">Diferencias Finitas</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="col-form-label-sm" for="size">Tamaño</label>
+            <label class="col-form-label" for="size">Tamaño</label>
             <input id="size" class="form-control form-control-sm" value="4" type="number">
           </div>
           
           <div id="temperatures-container">
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="col-form-label-sm" for="top">Temperatura Superior</label>
+                <label class="col-form-label" for="top">Temperatura Superior</label>
                 <input id="top" class="form-control form-control-sm" value="20" type="number">
               </div>
               <div class="form-group col-md-6">
-                <label class="col-form-label-sm" for="right">Temperatura Derecha</label>
+                <label class="col-form-label" for="right">Temperatura Derecha</label>
                 <input id="right" class="form-control form-control-sm" value="30" type="number">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="col-form-label-sm" for="bottom">Temperatura Inferior</label>
+                <label class="col-form-label" for="bottom">Temperatura Inferior</label>
                 <input id="bottom" class="form-control form-control-sm" value="40" type="number">
               </div>
               <div class="form-group col-md-6">
-                <label class="col-form-label-sm" for="left">Temperatura Izquierda</label>
+                <label class="col-form-label" for="left">Temperatura Izquierda</label>
                 <input id="left" class="form-control form-control-sm" value="50" type="number">
               </div>  
             </div>  
@@ -70,15 +70,18 @@
       </div>
     </div>
     <div>
-      <div id="results-container" class="row align-items-center">
-        <div class="col-sm-6 align-items-center">
-          <table id="coeficientMatrix" class="table table-sm table-bordered"></table>
+      <div id="results-container" class="row">
+        <div class="col-sm-6">
+            <p class="lead" >Matriz de Coeficientes</p>
+          <table id="coeficientMatrix" class="table table-bordered matrix" style="width: fit-content"></table>
         </div>
-        <div class="col-sm-2 align-items-center">
-          <table id="constantMatrix" class="matrix"></table>
+        <div class="col-sm-2">
+          <p class="lead" >Terminos Independientes</p>
+          <table id="constantMatrix" class="table table-bordered matrix" style="width: fit-content"></table>
         </div>
-        <div class="col-sm-4 align-items-center">
-          <table id="finalMatrix" class="matrix"></table>
+        <div class="col-sm-4 ">
+          <p class="lead">Matriz de Temperaturas</p>
+          <table id="finalMatrix" class="table table-bordered matrix" style="width: fit-content"></table>
         </div>
       </div>
 

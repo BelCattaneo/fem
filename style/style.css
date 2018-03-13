@@ -2,18 +2,6 @@ body{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.matrix {
-  text-align: right;
-}
-
-.matrix td {
-  border: black 1px solid;
-  position: relative;
-  width: 25px;
-}
-
-
-
 #coeficientMatrix {
   float: left;
 }
@@ -48,4 +36,9 @@ body{
 
 #title {
   padding-left: 10px;
+}
+
+.matrix {
+  width: fit-content;
+  text-align: right;
 }
