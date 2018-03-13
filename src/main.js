@@ -12,27 +12,24 @@ function createHeatmap(){
 
 
 $(document).ready(function() {
-  //createHeatmap();
+  createHeatmap();
 
   $("#run").click(function() {
     $("#heatmap").empty();
 
-    const {size, top, right, bottom, left}  = readValues();
+    const {method, size, top, right, bottom, left}  = readValues();
     const {constantMatrix, coeficientMatrix, finalMatrix} = diferenciasFinitas(size, {top, right, bottom, left});
-
-    const inv = math.inv(coeficientMatrix);
-    const r = math.cross(inv, constantMatrix);
-
-    console.log(r);
+    if(method == "finite-difference"){
+    }
 
     renderMatrix($("#coeficientMatrix"), coeficientMatrix);
-    renderMatrix($("#constantMatrix"), constantMatrix, {vertical: true});
+    renderMatrix($("#constantMatrix"), constantMatrix);
     renderMatrix($("#finalMatrix"), finalMatrix, {withRounding: true});
 
     matrixIndexes(finalMatrix, function(x, y) {
       console.log(getNodeByIndexes(finalMatrix, x, y));
     });
-    //renderHeatmap(createHeatmap, finalMatrix, screenSize);
+    renderHeatmap(createHeatmap, finalMatrix, screenSize);
   });
 
 });

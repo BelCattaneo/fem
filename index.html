@@ -2,8 +2,13 @@
 
   <head>
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="./node_modules/jquery/dist/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="./node_modules/heatmap.js/build/heatmap.js"></script>
+    <script src="./node_modules/decimal.js/decimal.js"></script>
     <script src="./node_modules/mathjs/dist/math.js"></script>
     <script src="./src/main.js"></script>
     <script src="./src/matrix.js"></script>
@@ -12,33 +17,71 @@
   </head>
 
   <body>
-    <div class="container">
-     <!-- <div id="heatmap"></div> -->
+    <div id="title">
+      <h1 class="display-5">Trabajo Pr&aacute;ctico C&aacute;lculo por Elementos Finitos</h1>
+      <p class="lead">C&aacute;lculo de la tempertura en una placa plana.</p>
     </div>
 
-    <div>
-      <label for="size">Size</label>
-      <input id="size" value="4" type="number">
+    <div class="input-data-heatmap-container">
+      <div class="row">
+        
+        <div id="input-data-container" class="col-sm-4">
+          <div class="form-group">
+            <label class="col-form-label-sm" for="method">M&eacute;todo</label>
+            <select id="method" class="form-control form-control-sm">
+                <option value="finite-difference">Diferencias Finitas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label-sm" for="size">Tamaño</label>
+            <input id="size" class="form-control form-control-sm" value="4" type="number">
+          </div>
+          
+          <div id="temperatures-container">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="col-form-label-sm" for="top">Temperatura Superior</label>
+                <input id="top" class="form-control form-control-sm" value="20" type="number">
+              </div>
+              <div class="form-group col-md-6">
+                <label class="col-form-label-sm" for="right">Temperatura Derecha</label>
+                <input id="right" class="form-control form-control-sm" value="30" type="number">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="col-form-label-sm" for="bottom">Temperatura Inferior</label>
+                <input id="bottom" class="form-control form-control-sm" value="40" type="number">
+              </div>
+              <div class="form-group col-md-6">
+                <label class="col-form-label-sm" for="left">Temperatura Izquierda</label>
+                <input id="left" class="form-control form-control-sm" value="50" type="number">
+              </div>  
+            </div>  
+          </div>
 
-      <label for="top">Top</label>
-      <input id="top" value="20" type="number">
-      
-      <label for="right">Right</label>
-      <input id="right" value="30" type="number">
-      
-      <label for="bottom">Bottom</label>
-      <input id="bottom" value="40" type="number">
-      
-      <label for="left">Left</label>
-      <input id="left" value="50" type="number">
-      
-      <button id="run">RUN</button>
+          <button id="run" class="btn btn-dark">RUN</button>
+        </div>
+
+        <div class="container col-sm-8">
+            <div id="heatmap"></div>
+        </div>
+        
+      </div>
     </div>
     <div>
-      <table id="coeficientMatrix" class="matrix"></table>
-      <table id="constantMatrix" class="matrix"></table>
-      <br>
-      <table id="finalMatrix" class="matrix"></table>
+      <div id="results-container" class="row align-items-center">
+        <div class="col-sm-6 align-items-center">
+          <table id="coeficientMatrix" class="table table-sm table-bordered"></table>
+        </div>
+        <div class="col-sm-2 align-items-center">
+          <table id="constantMatrix" class="matrix"></table>
+        </div>
+        <div class="col-sm-4 align-items-center">
+          <table id="finalMatrix" class="matrix"></table>
+        </div>
+      </div>
+
     </div>
   </body>
 

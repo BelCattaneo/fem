@@ -6,7 +6,8 @@ function readValues() {
     right: parseInt($("#right").val()),
     left: parseInt($("#left").val()),
     bottom: parseInt($("#bottom").val()),
-    size: parseInt($("#size").val())
+    size: parseInt($("#size").val()),
+    method: $("#method").val()
   }  
 }
 
@@ -28,34 +29,31 @@ function createHeatmapDataObject(tempMatrix, screenSize){
   }; 
 }
 
-function renderMatrix($elem, matrix, {withRounding, vertical} = {}) {
+function renderMatrix($elem, matrix, {withRounding} = {}) {
   $elem.empty();
 
-  const render = (td) => {
+  const render = (tr) => {
     return (elem) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = withRounding ? Math.round(elem) : elem;
-      td.appendChild(tr);
+      const td = document.createElement("td");
+      td.innerHTML = withRounding ? Math.round(elem) : elem;
+      tr.appendChild(td);
+
     }
   }
 
-  let td = document.createElement("td");
-
+  
   for(let x = 0; x < matrix.length; x++) {
-    if(!vertical) {
-      td = document.createElement("td");
-    }
-
+    let tr = document.createElement("tr");
     if(matrix[x].length) {
       for (let y = 0; y < matrix.length; y++) {
-        render(td)(matrix[y][x])
+        render(tr)(matrix[x][y])
       }
     } else {
-      render(td)(matrix[x])
+      render(tr)(matrix[x])
     }
 
 
-    $elem.append(td);
+    $elem.append(tr);
   }
 }
 

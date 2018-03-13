@@ -4,16 +4,15 @@ body{
 
 .matrix {
   text-align: right;
-  font-size: x-large;
 }
 
 .matrix td {
   border: black 1px solid;
+  position: relative;
+  width: 25px;
 }
 
-.matrix tr:nth-child(even) {
-  background-color: #dddddd;
-}
+
 
 #coeficientMatrix {
   float: left;
@@ -22,7 +21,6 @@ body{
 #constantMatrix {
   float: left;
 }
-
 
 .container {
   display: flex;
@@ -33,4 +31,21 @@ body{
   width: 600px;
   height: 600px;
   border: 1px solid black;
+}
+
+#input-data-container {
+  padding: 50px;
+  width: 30%;
+}
+
+.lead { 
+  margin-bottom: 0px;
+}
+
+#results-container {
+  padding: 30px;
+}
+
+#title {
+  padding-left: 10px;
 }
